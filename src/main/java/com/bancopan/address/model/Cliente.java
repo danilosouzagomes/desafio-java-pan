@@ -8,6 +8,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String cpf;
     private String nome;
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.PERSIST)

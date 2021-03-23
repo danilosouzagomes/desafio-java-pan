@@ -6,10 +6,15 @@ import com.bancopan.address.rest.client.viacep.dto.EnderecoViaCepDTO;
 import com.bancopan.address.service.IEnderecoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/api/enderecos")
@@ -22,7 +27,7 @@ public class EnderecosController {
     }
 
     @GetMapping("/consulta-cep/{cep}")
-    public ResponseEntity<EnderecoViaCepDTO> consultarCep(@PathVariable(name = "cep") String cep) {
+    public ResponseEntity<EnderecoViaCepDTO> consultarCep(@Valid @PathVariable(name = "cep") @Size(min = 8, max = 8) String cep) {
         return new ResponseEntity<>(enderecoService.consultarCep(cep), HttpStatus.OK);
     }
 
