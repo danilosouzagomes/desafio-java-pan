@@ -7,12 +7,13 @@ import com.bancopan.address.service.impl.ClienteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ClienteServiceTest {
@@ -32,7 +33,7 @@ public class ClienteServiceTest {
         cliente.setEndereco(endereco);
         endereco.setCliente(cliente);
 
-        BDDMockito.given(clienteRepository.findByCpf(cpf)).willReturn(Optional.of(cliente));
+        when(clienteRepository.findByCpf(cpf)).thenReturn(Optional.of(cliente));
 
         Optional<Cliente> clienteService = this.clienteService.obterCliente(cpf);
 
@@ -43,7 +44,7 @@ public class ClienteServiceTest {
     void clienteNaoEncontrado() {
         String cpf = "11122233344";
 
-        BDDMockito.given(clienteRepository.findByCpf(cpf)).willReturn(Optional.empty());
+        when(clienteRepository.findByCpf(cpf)).thenReturn(Optional.empty());
 
         Optional<Cliente> clienteService = this.clienteService.obterCliente(cpf);
 
